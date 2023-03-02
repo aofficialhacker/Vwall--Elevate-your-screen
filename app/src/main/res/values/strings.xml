@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">timepassapp</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_hint_seconds">Enter seconds for wallpaper change</string>
+    <string name="pref_key_interval">interval_key</string>
+    <string name="pref_key_auto_change">pref_key_auto_change</string>
+    <string name="pref_title_auto_change">Auto Change Wallpaper</string>
+    <string name="pref_title_interval">Wallpaper Change Interval (in minutes)</string>
+    <string name="pref_summary_auto_change_on">Automatic wallpaper changing is on</string>
+    <string name="pref_summary_auto_change_off">Automatic wallpaper changing is off</string>
+    <string name="pref_dialog_title_interval">Change Wallpaper Interval</string>
+    <string name="pref_dialog_message_interval">Select the interval for changing the wallpaper:</string>
+
+
+
+
+
+
+
+
+
+</resources>

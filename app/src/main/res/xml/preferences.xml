@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="pref_key_auto_change"
+        android:title="@string/pref_title_auto_change"
+        android:defaultValue="false"
+        android:summaryOn="@string/pref_summary_auto_change_on"
+        android:summaryOff="@string/pref_summary_auto_change_off"/>
+
+    <EditTextPreference
+        android:key="pref_key_interval"
+        android:title="@string/pref_title_interval"
+        android:defaultValue="60"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:dialogTitle="@string/pref_dialog_title_interval"
+        android:dialogMessage="@string/pref_dialog_message_interval"/>
+
+
+</PreferenceScreen>
