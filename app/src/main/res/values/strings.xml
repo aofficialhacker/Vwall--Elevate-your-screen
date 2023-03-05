@@ -35,12 +35,6 @@
     <string name="pref_key_weather_wallpaper">wallpaper_by_weather</string>
 
 
-
-
-
-
-
-
     <string-array name="categories_array">
         <item>Nature</item>
         <item>city</item>

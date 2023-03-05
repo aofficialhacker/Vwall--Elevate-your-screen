@@ -66,6 +66,7 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistImage
             @Override
             public void onClick(View v) {
                 openFileChooser();
+
             }
         });
 
@@ -87,6 +88,9 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistImage
                 // Save the Set of String objects to SharedPreferences
                 editor.putStringSet("image_list", imageSet);
                 editor.apply();
+
+                // Start the WallpaperService
+                startService(new Intent(PlaylistActivity.this, WallpaperService.class));
 
                 // Set the wallpaper logic
                 handler.removeCallbacksAndMessages(null); // Remove any previous callbacks

@@ -171,6 +171,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
+                if (id == R.id.nav_uploads) {
+                    Intent intent = new Intent(MainActivity.this, UploadImageActivity.class);
+                    startActivity(intent);
+                }
+
                 if (id == R.id.nav_playlist) {
                     // Replace with DownloadedImagesFragment
 
