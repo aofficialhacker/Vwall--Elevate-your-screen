@@ -6,13 +6,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_title"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
     <EditText
         android:id="@+id/edit_seconds"
         android:layout_width="match_parent"
@@ -36,6 +29,28 @@
         android:layout_marginTop="16dp"
         android:checked="true"
         app:layout_constraintTop_toBottomOf="@+id/editText_seconds" />
+
+
+    <Switch
+        android:id="@+id/switch_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Dark Mode"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/interval_container" />
+
+    <Switch
+        android:id="@+id/switch_weather_wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/pref_key_weather_wallpaper"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"/>
+
+
+
+
 
 
 

@@ -1,43 +1,33 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <ImageView
         android:id="@+id/image_view"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_background" />
 
-    <TextView
-        android:id="@+id/title_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/description_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:textSize="14sp" />
-
-    <Button
+    <ImageButton
         android:id="@+id/download_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download"
-        android:layout_gravity="end" />
+        android:layout_below="@id/image_view"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/download_icon" />
 
-    <Button
+    <ImageButton
         android:id="@+id/set_wallpaper_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set Wallpaper"
-        android:layout_gravity="end" />
+        android:layout_below="@id/image_view"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/gallerynewicon" />
 
-</LinearLayout>
+</RelativeLayout>

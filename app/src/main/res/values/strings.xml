@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">timepassapp</string>
+
     <string name="settings_title">Settings</string>
     <string name="settings_hint_seconds">Enter seconds for wallpaper change</string>
     <string name="pref_key_interval">interval_key</string>
@@ -10,6 +10,29 @@
     <string name="pref_summary_auto_change_off">Automatic wallpaper changing is off</string>
     <string name="pref_dialog_title_interval">Change Wallpaper Interval</string>
     <string name="pref_dialog_message_interval">Select the interval for changing the wallpaper:</string>
+    <string name="select_category">Select a category:</string>
+    <string name="logo_description">Logo Description</string>
+    <string name="pref_key_dark_mode">is dark mode</string>
+
+    <string name="wallpaper_image_description">Wallpaper image</string>
+    <string name="download_button_text">Download</string>
+    <string name="download_button_description">Download wallpaper image</string>
+    <string name="set_wallpaper_button_text">Set as Wallpaper</string>
+    <string name="set_wallpaper_button_description">Set wallpaper image as device wallpaper</string>
+    <string name="share_button_text">Share</string>
+    <string name="share_button_description">Share wallpaper image</string>
+
+    <string name="navigation_drawer_open">open drawer </string>
+    <string name="navigation_drawer_close">close drawer </string>
+
+    <string name="playlist_title">Playlist Title</string>
+    <string name="playlist_name_hint">Enter playlist name</string>
+    <string name="start_playlist_button_text">Start Playlist</string>
+    <string name="nav_playlist">Playlist</string>
+    <string name="add_image_button_text">Add Images From Gallery</string>
+    <string name="app_name">Vwall</string>
+    <string name="permission_denied_message">Permission denied message</string>
+    <string name="pref_key_weather_wallpaper">wallpaper_by_weather</string>
 
 
 
@@ -18,5 +41,16 @@
 
 
 
-
+    <string-array name="categories_array">
+        <item>Nature</item>
+        <item>city</item>
+        <item>beach</item>
+        <!-- add more items for other categories -->
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
+
+
+
+
