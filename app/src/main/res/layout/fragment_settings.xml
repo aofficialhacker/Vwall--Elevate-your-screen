@@ -40,13 +40,6 @@
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/interval_container" />
 
-    <Switch
-        android:id="@+id/switch_weather_wallpaper"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/pref_key_weather_wallpaper"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"/>
 
 
 
