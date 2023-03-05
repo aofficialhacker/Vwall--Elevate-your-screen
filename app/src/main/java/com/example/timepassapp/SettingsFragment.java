@@ -28,8 +28,7 @@ public class SettingsFragment extends Fragment {
     private Button btnSaveInterval;
     private SharedPreferences sharedPreferences;
     private Switch switchTheme;
-    private Switch switchWallpaperByWeather;
-    private boolean isWallpaperByWeatherEnabled;
+
 
     private static final int PERMISSION_REQUEST_CODE = 1001;
 

@@ -1,14 +1,17 @@
 package com.example.timepassapp;
 
+import android.app.WallpaperManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.view.View;
@@ -29,7 +32,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PlaylistActivity extends AppCompatActivity implements PlaylistImageAdapter.OnRemoveClickListener {
 
@@ -38,16 +43,23 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistImage
     private List<Uri> imageList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PlaylistImageAdapter adapter;
+    private SharedPreferences sharedPreferences;
+    private Button savePlaylistButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlist);
 
+        Handler handler = new Handler();
+        sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
+
         recyclerView = findViewById(R.id.wallpaper_list_recyclerview);
         adapter = new PlaylistImageAdapter(imageList, this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+
 
         Button addImageButton = findViewById(R.id.btn_add_image);
         addImageButton.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +68,51 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistImage
                 openFileChooser();
             }
         });
+
+        savePlaylistButton = findViewById(R.id.btn_save_playlist);
+        savePlaylistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the playlist logic
+
+                // Get the Editor object of the SharedPreferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                // Convert the List of Uri objects to a Set of String objects
+                Set<String> imageSet = new HashSet<>();
+                for (Uri uri : imageList) {
+                    imageSet.add(uri.toString());
+                }
+
+                // Save the Set of String objects to SharedPreferences
+                editor.putStringSet("image_list", imageSet);
+                editor.apply();
+
+                // Set the wallpaper logic
+                handler.removeCallbacksAndMessages(null); // Remove any previous callbacks
+                handler.postDelayed(new Runnable() {
+                    int index = 0;
+
+                    @Override
+                    public void run() {
+                        Uri wallpaperUri = imageList.get(index);
+                        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
+                        try {
+                            wallpaperManager.setStream(getContentResolver().openInputStream(wallpaperUri));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(PlaylistActivity.this, "Failed to set wallpaper", Toast.LENGTH_SHORT).show();
+                        }
+                        index++;
+                        if (index >= imageList.size()) {
+                            index = 0;
+                        }
+                        handler.postDelayed(this, 5000);
+                    }
+                }, 5000); // Set the initial delay to 5 seconds (5000 milliseconds)
+            }
+        });
+        loadSavedImages(); // Load the saved images from SharedPreferences
     }
 
     private void openFileChooser() {
@@ -80,6 +137,20 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistImage
         imageList.remove(position);
         adapter.notifyItemRemoved(position);
     }
+    private void loadSavedImages() {
+        // Load the saved images from SharedPreferences
+        Set<String> imageSet = sharedPreferences.getStringSet("image_list", null);
+        if (imageSet != null) {
+            for (String uriString : imageSet) {
+                Uri uri = Uri.parse(uriString);
+                imageList.add(uri);
+                adapter.notifyItemInserted(imageList.size() - 1);
+            }
+        }
+        savePlaylistButton.setVisibility(View.VISIBLE);
+    }
+
+
 }
 
 

@@ -43,6 +43,7 @@ public class PlaylistImageAdapter extends RecyclerView.Adapter<PlaylistImageAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
 
+
         // Load the image from the Uri using Glide
         Glide.with(context)
                 .load(imageList.get(position))
@@ -80,6 +81,8 @@ public class PlaylistImageAdapter extends RecyclerView.Adapter<PlaylistImageAdap
     public interface OnRemoveClickListener {
         void onRemoveClick(int position);
     }
+
+
 }
 
 
