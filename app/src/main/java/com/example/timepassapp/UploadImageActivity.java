@@ -53,6 +53,7 @@ public class UploadImageActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mFirestore = FirebaseFirestore.getInstance();
 
+
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

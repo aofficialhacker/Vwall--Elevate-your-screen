@@ -5,6 +5,7 @@ public class Imagenew {
     private String url;
 
     public Imagenew() {
+        // Required empty public constructor
     }
 
     public Imagenew(String name, String url) {
@@ -28,3 +29,4 @@ public class Imagenew {
         this.url = url;
     }
 }
+
