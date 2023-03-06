@@ -1,32 +1,31 @@
 package com.example.timepassapp;
 
 public class Imagenew {
-    private String name;
-    private String url;
+    private String imageUrl;
+    private String imageName;
 
-    public Imagenew() {
-        // Required empty public constructor
+    public Imagenew() {}
+
+    public Imagenew(String imageUrl, String imageName) {
+        this.imageUrl = imageUrl;
+        this.imageName = imageName;
     }
 
-    public Imagenew(String name, String url) {
-        this.name = name;
-        this.url = url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getName() {
-        return name;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getUrl() {
-        return url;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }
+
 

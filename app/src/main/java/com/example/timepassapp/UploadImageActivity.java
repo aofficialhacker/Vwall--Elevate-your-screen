@@ -2,6 +2,9 @@ package com.example.timepassapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -17,13 +20,18 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UploadImageActivity extends AppCompatActivity {
@@ -40,6 +48,10 @@ public class UploadImageActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private FirebaseFirestore mFirestore;
 
+    private RecyclerView mRecyclerView;
+    private ImageAdapter mAdapter;
+    private List<Imagenew> mImages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +65,13 @@ public class UploadImageActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mFirestore = FirebaseFirestore.getInstance();
 
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+        mImages = new ArrayList<>();
+        mAdapter = new ImageAdapter(this, mImages);
+        mRecyclerView.setAdapter(mAdapter);
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +86,8 @@ public class UploadImageActivity extends AppCompatActivity {
                 uploadFile();
             }
         });
+
+        getAllImages();
     }
 
     private void openFileChooser() {
@@ -106,9 +127,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String fileName = mEditTextFileName.getText().toString().trim();
-                                    Map<String, Object> image = new HashMap<>();
-                                    image.put("imageUrl", uri.toString());
-                                    image.put("imageName", fileName);
+                                    Imagenew image = new Imagenew(fileName, uri.toString());
                                     mFirestore.collection("uploads").add(image)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
@@ -136,4 +155,25 @@ public class UploadImageActivity extends AppCompatActivity {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void getAllImages() {
+        mFirestore.collection("uploads").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                            Imagenew image = documentSnapshot.toObject(Imagenew.class);
+                            mImages.add(image);
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(UploadImageActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
 }
+
