@@ -136,8 +136,12 @@ public class WallpaperDetailActivity extends AppCompatActivity {
         File file = new File(getFilesDir(), fileName);
         Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".fileprovider", file);
 
+
         // Add the Uri to the share Intent
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+        // Add the text to the intent
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "This wallpaper is downloaded with VWall App");
 
         // Start the share Intent
         startActivity(Intent.createChooser(shareIntent, "Share Image"));

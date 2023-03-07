@@ -85,6 +85,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -124,12 +129,21 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             "Space", "Art", "Technology"};
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private CollectionReference wallpapersCollection;
+    private int searchResultsCount = 0;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Initialize Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Set wallpapersCollection reference
+        wallpapersCollection = db.collection("uploads");
 
         // Initialize the RequestQueue
         mRequestQueue = Volley.newRequestQueue(this);
@@ -273,10 +287,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
 
     private void searchImages(String query) {
-        String url = "https://pixabay.com/api/?key=" + "28627810-443d6398e30814e22bbfdcd59" + "&q=" + query + "&image_type=photo";
+        String pixabayUrl = "https://pixabay.com/api/?key=" + "28627810-443d6398e30814e22bbfdcd59" + "&q=" + query + "&image_type=photo";
 
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+        // Search Pixabay API
+        JsonObjectRequest pixabayRequest = new JsonObjectRequest(Request.Method.GET, pixabayUrl, null,
                 response -> {
                     try {
                         JSONArray jsonArray = response.getJSONArray("hits");
@@ -288,7 +302,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                             WallpaperItem wallpaperItem = new WallpaperItem(imageUrl);
                             wallpaperItemList.add(wallpaperItem);
                         }
-                        recyclerViewAdapter.notifyDataSetChanged();
+
+                        // Notify RecyclerView adapter after both API and database search
+                        searchResultsCount++;
+                        if (searchResultsCount == 2) {
+                            recyclerViewAdapter.notifyDataSetChanged();
+                            searchResultsCount = 0;
+                        }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -297,8 +317,30 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             Toast.makeText(MainActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
-        mRequestQueue.add(request);
+        mRequestQueue.add(pixabayRequest);
+
+        // Search Firestore database
+        Query firestoreQuery = wallpapersCollection.whereEqualTo("tags." + query.toLowerCase(), true);
+        firestoreQuery.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    String imageUrl = document.getString("url");
+                    WallpaperItem wallpaperItem = new WallpaperItem(imageUrl);
+                    wallpaperItemList.add(wallpaperItem);
+                }
+
+                // Notify RecyclerView adapter after both API and database search
+                searchResultsCount++;
+                if (searchResultsCount == 2) {
+                    recyclerViewAdapter.notifyDataSetChanged();
+                    searchResultsCount = 0;
+                }
+            } else {
+                Log.d(TAG, "Error getting documents: ", task.getException());
+            }
+        });
     }
+
 
 
     @Override
