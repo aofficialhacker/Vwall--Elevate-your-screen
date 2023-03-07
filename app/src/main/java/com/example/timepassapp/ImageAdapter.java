@@ -1,6 +1,7 @@
 package com.example.timepassapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,19 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Imagenew currentImage = mImageList.get(position);
-        holder.textViewName.setText(currentImage.getImageName());
-        Picasso.get().load(currentImage.getImageUrl()).fit().centerCrop().into(holder.imageView);
+
+        holder.mTextView.setText(currentImage.getImageName());
+        Picasso.get().load(currentImage.getImageUrl()).into(holder.mImageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, WallpaperDetailActivity.class);
+                intent.putExtra("imageUrl", currentImage.getImageUrl());
+                intent.putExtra("imageName", currentImage.getImageName());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -44,19 +56,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return mImageList.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder {
+    public static class ImageViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewName;
-        public ImageView imageView;
+        public TextView mTextView;
+        public ImageView mImageView;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewName = itemView.findViewById(R.id.image_name);
-            imageView = itemView.findViewById(R.id.new_image_view);
+            mTextView = itemView.findViewById(R.id.image_name);
+            mImageView = itemView.findViewById(R.id.new_image_view);
         }
     }
 }
+
 
 
 
