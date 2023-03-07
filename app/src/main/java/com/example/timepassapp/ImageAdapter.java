@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -17,11 +18,11 @@ import java.util.List;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     private Context mContext;
-    private List<Imagenew> mImages;
+    private List<Imagenew> mImageList;
 
-    public ImageAdapter(Context context, List<Imagenew> images) {
+    public ImageAdapter(Context context, List<Imagenew> imageList) {
         mContext = context;
-        mImages = images;
+        mImageList = imageList;
     }
 
     @NonNull
@@ -33,19 +34,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        Imagenew currentImage = mImages.get(position);
-
-        Picasso.get()
-                .load(currentImage.getImageUrl())
-                .placeholder(R.mipmap.ic_launcher)
-                .fit()
-                .centerCrop()
-                .into(holder.imageView);
+        Imagenew currentImage = mImageList.get(position);
+        holder.textViewName.setText(currentImage.getImageName());
+        Picasso.get().load(currentImage.getImageUrl()).fit().centerCrop().into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-        return mImages.size();
+        return mImageList.size();
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder {
@@ -53,14 +49,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         public TextView textViewName;
         public ImageView imageView;
 
-        public ImageViewHolder(View itemView) {
+        public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
 
-
+            textViewName = itemView.findViewById(R.id.image_name);
             imageView = itemView.findViewById(R.id.new_image_view);
         }
     }
 }
+
+
 
 
 

@@ -19,9 +19,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -48,9 +52,9 @@ public class UploadImageActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private FirebaseFirestore mFirestore;
 
+    private List<Imagenew> mImageList; // list to store uploaded images
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
-    private List<Imagenew> mImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +69,36 @@ public class UploadImageActivity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
         mFirestore = FirebaseFirestore.getInstance();
 
+        mImageList = new ArrayList<>(); // initialize the list
+
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
-
-        mImages = new ArrayList<>();
-        mAdapter = new ImageAdapter(this, mImages);
+        mAdapter = new ImageAdapter(this, mImageList);
         mRecyclerView.setAdapter(mAdapter);
+
+        // retrieve all uploaded images from Firestore and add them to the list
+        mFirestore.collection("uploads")
+                .orderBy("imageName", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Toast.makeText(UploadImageActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        mImageList.clear();
+
+                        for (QueryDocumentSnapshot document : value) {
+                            Imagenew image = document.toObject(Imagenew.class);
+                            image.setId(document.getId());
+                            mImageList.add(image);
+                        }
+
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,8 +113,6 @@ public class UploadImageActivity extends AppCompatActivity {
                 uploadFile();
             }
         });
-
-        getAllImages();
     }
 
     private void openFileChooser() {
@@ -126,13 +151,19 @@ public class UploadImageActivity extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    String fileName = mEditTextFileName.getText().toString().trim();
-                                    Imagenew image = new Imagenew(fileName, uri.toString());
+                                    String imageName = mEditTextFileName.getText().toString().trim();
+
+                                    if (imageName.isEmpty()) {
+                                        Toast.makeText(UploadImageActivity.this, "Please enter a name for the image", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+
+                                    Imagenew image = new Imagenew(imageName, uri.toString());
                                     mFirestore.collection("uploads").add(image)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
                                                 public void onSuccess(DocumentReference documentReference) {
-                                                    Toast.makeText(UploadImageActivity.this, "Upload successful", Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(UploadImageActivity.this, "Image uploaded", Toast.LENGTH_SHORT).show();
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
@@ -155,25 +186,6 @@ public class UploadImageActivity extends AppCompatActivity {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
-
-    private void getAllImages() {
-        mFirestore.collection("uploads").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Imagenew image = documentSnapshot.toObject(Imagenew.class);
-                            mImages.add(image);
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(UploadImageActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
 }
+
 
