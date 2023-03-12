@@ -29,6 +29,11 @@
             android:icon="@drawable/upload_icon"
             android:title="Uploads" />
 
+        <item
+            android:id="@+id/nav_recommended"
+            android:icon="@drawable/ic_recommended"
+            android:title="@string/nav_recommended" />
+
 
 
         <item

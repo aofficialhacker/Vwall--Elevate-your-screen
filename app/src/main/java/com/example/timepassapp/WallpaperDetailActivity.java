@@ -32,12 +32,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
 public class WallpaperDetailActivity extends AppCompatActivity {
 
     private ImageView wallpaperImageView;
     private ImageButton setWallpaperButton, downloadButton,shareButton;
 
     private String imageUrl;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,6 @@ public class WallpaperDetailActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(imageUrl)
                 .dontTransform()
-                .placeholder(R.drawable.placeholder)
                 .into(wallpaperImageView);
 
         // Set a click listener for the Share button
@@ -66,11 +68,6 @@ public class WallpaperDetailActivity extends AppCompatActivity {
                 shareImage();
             }
         });
-
-
-
-
-
 
         setWallpaperButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -518,15 +518,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         swipeRefreshLayout.setRefreshing(false);
     }
 
-
-
-
-
-
-
-
-
-
 }
 
 
