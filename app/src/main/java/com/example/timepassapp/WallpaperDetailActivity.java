@@ -1,8 +1,10 @@
 package com.example.timepassapp;
 
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.WallpaperManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -91,12 +93,49 @@ public class WallpaperDetailActivity extends AppCompatActivity {
         try {
             // Get the bitmap from the image view
             Bitmap bitmap = ((BitmapDrawable) wallpaperImageView.getDrawable()).getBitmap();
-            wallpaperManager.setBitmap(bitmap);
-            Toast.makeText(this, "Wallpaper set successfully", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Set Wallpaper");
+            builder.setItems(new CharSequence[]{"Home Screen", "Lock Screen", "Both"},
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 0:
+                                    try {
+                                        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM);
+                                        Toast.makeText(WallpaperDetailActivity.this, "Wallpaper set to Home Screen successfully", Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        Toast.makeText(WallpaperDetailActivity.this, "Failed to set wallpaper to Home Screen", Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                                case 1:
+                                    try {
+                                        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK);
+                                        Toast.makeText(WallpaperDetailActivity.this, "Wallpaper set to Lock Screen successfully", Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        Toast.makeText(WallpaperDetailActivity.this, "Failed to set wallpaper to Lock Screen", Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                                case 2:
+                                    try {
+                                        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM | WallpaperManager.FLAG_LOCK);
+                                        Toast.makeText(WallpaperDetailActivity.this, "Wallpaper set to both Home Screen and Lock Screen successfully", Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        Toast.makeText(WallpaperDetailActivity.this, "Failed to set wallpaper to both Home Screen and Lock Screen", Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                            }
+                        }
+                    });
+            builder.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     private void downloadImage() {
         DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);

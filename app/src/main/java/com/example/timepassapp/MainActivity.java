@@ -193,6 +193,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
+                if (id == R.id.nav_contact_us) {
+                    Intent intent = new Intent(MainActivity.this, Contact_us.class);
+                    startActivity(intent);
+                }
+
+
+
+                if (id == R.id.about_us) {
+                    Intent intent = new Intent(MainActivity.this, about_us.class);
+                    startActivity(intent);
+                }
+
+
                 if (id == R.id.nav_uploads) {
                     Intent intent = new Intent(MainActivity.this, UploadImageActivity.class);
                     startActivity(intent);
@@ -364,6 +377,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         WallpaperItem wallpaperItem = wallpaperItemList.get(position);
         String imageUrl = wallpaperItem.getImageUrl();
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Set Wallpaper");
+        builder.setItems(new CharSequence[]{"Home Screen", "Lock Screen"}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i) {
+                    case 0:
+                        setWallpaper(imageUrl, WallpaperManager.FLAG_SYSTEM);
+                        break;
+                    case 1:
+                        setWallpaper(imageUrl, WallpaperManager.FLAG_LOCK);
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void setWallpaper(String imageUrl, int flag) {
         Glide.with(this)
                 .asBitmap()
                 .load(imageUrl)
@@ -373,7 +405,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                     public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                         WallpaperManager wallpaperManager = WallpaperManager.getInstance(MainActivity.this);
                         try {
-                            wallpaperManager.setBitmap(resource);
+                            wallpaperManager.setBitmap(resource, null, true, flag);
                             Toast.makeText(MainActivity.this, "Wallpaper set successfully!", Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -382,6 +414,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                     }
                 });
     }
+
 
     // Handle download button click
     @Override

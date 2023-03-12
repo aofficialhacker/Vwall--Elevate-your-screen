@@ -43,6 +43,19 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_wall_reel">WallReel</string>
+
+    //about us
+
+    <string name="about_us_text">About Us</string>
+    <string name="about_us_content">"Wallpaper App is a project developed by Vishal Gor, a student passionate about mobile app development. This app is designed to provide you with a vast collection of high-quality wallpapers to enhance your device's aesthetics.
+
+At Wallpaper App, we are committed to providing you with the best possible experience. We regularly update our collection with new and trending wallpapers, so you'll never run out of options. Our app is also designed to be user-friendly, with a simple and intuitive interface that makes browsing and downloading wallpapers a breeze.
+
+We appreciate your support and feedback as we continue to improve and add new features to Wallpaper App. If you have any questions, comments, or suggestions, please don't hesitate to contact us. We hope you enjoy using Wallpaper App as much as we enjoyed creating it."</string>
+    <string name="nav_contact_us">Contact Us</string>
+
+
 </resources>
 
 
