@@ -35,8 +35,6 @@
             android:icon="@drawable/upload_icon"
             android:title="Uploads" />
 
-
-
         <item
             android:id="@+id/about_us"
             android:icon="@drawable/aboutus_icon"

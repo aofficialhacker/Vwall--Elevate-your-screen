@@ -13,6 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:title="@string/nav_recommended"
+        app:titleTextColor="@android:color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
     <androidx.recyclerview.widget.RecyclerView
