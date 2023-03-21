@@ -12,12 +12,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.File;
 import java.util.List;
 
 public class DownloadedImagesAdapter extends RecyclerView.Adapter<DownloadedImagesAdapter.ViewHolder> {
 
     private Context context;
     private List<String> downloadedImagesList;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public DownloadedImagesAdapter(Context context, List<String> downloadedImagesList) {
         this.context = context;
@@ -28,26 +38,16 @@ public class DownloadedImagesAdapter extends RecyclerView.Adapter<DownloadedImag
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_downloaded_image, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, listener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String imagePath = downloadedImagesList.get(position);
-
         Glide.with(context)
-                .load(imagePath)
-                .dontTransform()
-                .into(holder.ivDownloadedImage);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, FullScreenImageActivity.class);
-                intent.putExtra("imagePath", imagePath);
-                context.startActivity(intent);
-            }
-        });
+                .load(new File(imagePath))
+                .centerCrop()
+                .into(holder.imageView);
     }
 
     @Override
@@ -57,13 +57,25 @@ public class DownloadedImagesAdapter extends RecyclerView.Adapter<DownloadedImag
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivDownloadedImage;
+        public ImageView imageView;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.image_view_downloaded_image);
 
-            ivDownloadedImage = itemView.findViewById(R.id.image_view_downloaded_image);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }
+
 

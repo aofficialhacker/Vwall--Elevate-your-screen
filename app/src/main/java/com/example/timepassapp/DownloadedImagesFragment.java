@@ -1,5 +1,6 @@
 package com.example.timepassapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,7 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownloadedImagesFragment extends Fragment {
+public class DownloadedImagesFragment extends Fragment implements DownloadedImagesAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
     private DownloadedImagesAdapter adapter;
@@ -42,12 +43,21 @@ public class DownloadedImagesFragment extends Fragment {
 
         // Initialize adapter
         adapter = new DownloadedImagesAdapter(getContext(), downloadedImagesList);
+        adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
         // Load downloaded images from storage
         loadDownloadedImages();
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        // Launch the WallpaperDetailActivity on clicking an image
+        Intent intent = new Intent(getActivity(), WallpaperDetailActivity.class);
+        intent.putExtra("image_path", downloadedImagesList.get(position));
+        startActivity(intent);
     }
 
     private void loadDownloadedImages() {
@@ -67,3 +77,4 @@ public class DownloadedImagesFragment extends Fragment {
     }
 
 }
+

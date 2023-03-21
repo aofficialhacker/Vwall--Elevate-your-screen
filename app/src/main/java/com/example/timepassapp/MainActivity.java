@@ -140,11 +140,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_main);
-
-
-
 
 
         // Initialize Firestore
@@ -192,6 +188,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+
+                if (id == R.id.nav_recommended) {
+                    Intent intent = new Intent(MainActivity.this, RecommendedWallpapersActivity.class);
+                    startActivity(intent);
+                }
 
                 if (id == R.id.nav_contact_us) {
                     Intent intent = new Intent(MainActivity.this, Contact_us.class);

@@ -37,7 +37,6 @@
     <string name="nav_recommended">Recommended Wallpapers</string>
 
 
-
     <string-array name="categories_array">
         <item>Nature</item>
         <item>city</item>

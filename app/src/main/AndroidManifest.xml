@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Timepassapp"
         tools:targetApi="31">
         <activity
+            android:name=".RecommendedWallpapersActivity"
+            android:exported="false" />
+        <activity
             android:name=".Contact_us"
             android:exported="false" />
         <activity
