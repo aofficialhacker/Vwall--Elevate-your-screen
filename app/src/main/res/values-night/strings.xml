@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="nav_contact_us">Contact Us</string>
-    <string name="nav_recommended">Recommended Wallpapers</string>
+    <string name="nav_recommended">Trending Wallpapers</string>
 
 </resources>

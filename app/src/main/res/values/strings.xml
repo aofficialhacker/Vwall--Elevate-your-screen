@@ -34,7 +34,7 @@
     <string name="permission_denied_message">Permission denied message</string>
     <string name="pref_key_weather_wallpaper">wallpaper_by_weather</string>
 
-    <string name="nav_recommended">Recommended Wallpapers</string>
+    <string name="nav_recommended">Trending Wallpapers</string>
 
 
     <string-array name="categories_array">
