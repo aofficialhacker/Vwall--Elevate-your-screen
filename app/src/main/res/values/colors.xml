@@ -23,5 +23,13 @@
     <color name="toolbar_color">#FF303F9F</color>
 
 
+    <color name="my_text_color_light">#000000</color> <!-- black for light mode -->
+    <color name="my_text_color_dark">#FFFFFF</color> <!-- white for dark mode -->
+
+    <color name="splash1">#F31D5E</color>
+    <color name="splash2">#FFFFFF</color>
+    <color name="splash3">#2196F3 </color>
+
+
 
 </resources>

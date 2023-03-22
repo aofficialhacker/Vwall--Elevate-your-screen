@@ -200,7 +200,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 }
 
 
-
                 if (id == R.id.about_us) {
                     Intent intent = new Intent(MainActivity.this, about_us.class);
                     startActivity(intent);
@@ -262,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         wallpaperItemList = new ArrayList<>();
         recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, wallpaperItemList);
+
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.setOnItemClickListener(MainActivity.this);
         imageUrl = getIntent().getStringExtra("imageUrl");
@@ -303,9 +303,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
 
     }
-
-
-
 
 
     private void searchImages(String query) {

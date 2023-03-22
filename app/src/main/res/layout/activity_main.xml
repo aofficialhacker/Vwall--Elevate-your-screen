@@ -29,9 +29,9 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@color/toolbar_color"
+                    android:background="@drawable/splash_background"
                     app:titleTextColor="@android:color/white"
-                    app:navigationIcon="@drawable/hamburger_icon"
+                    app:navigationIcon="@drawable/hamberger_v4"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:title="@string/app_name" />
 

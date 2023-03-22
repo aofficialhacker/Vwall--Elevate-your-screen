@@ -79,8 +79,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView mImageView;
-        public TextView mTextViewCreator;
-        public TextView mTextViewLikes;
+
         public ImageButton mDownloadButton;
         public ImageButton mSetWallpaperButton;
 
