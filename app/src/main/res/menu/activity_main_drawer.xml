@@ -35,6 +35,7 @@
             android:icon="@drawable/upload_icon"
             android:title="Uploads" />
 
+
         <item
             android:id="@+id/about_us"
             android:icon="@drawable/aboutus_icon"
@@ -43,11 +44,6 @@
             android:id="@+id/nav_contact_us"
             android:icon="@drawable/contact_us_icon"
             android:title="@string/nav_contact_us" />
-
-
-
-
     </group>
-
 
 </menu>

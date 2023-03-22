@@ -11,9 +11,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/toolbar_color"
         app:title="@string/nav_recommended"
-        app:titleTextColor="@android:color/white"
+        app:titleTextColor="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
     <androidx.recyclerview.widget.RecyclerView

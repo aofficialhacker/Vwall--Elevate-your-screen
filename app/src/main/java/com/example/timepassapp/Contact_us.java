@@ -60,18 +60,19 @@ public class Contact_us extends AppCompatActivity {
         }
 
         // Create intent to send email
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
         intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "rajgorvishal28@gmail.com" });
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, message);
+        intent.setPackage("com.google.android.gm");
 
         // Verify that the intent will resolve to an activity
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
-            // Show error message if no email app is installed
-            Toast.makeText(this, "No email app found", Toast.LENGTH_SHORT).show();
+            // Show error message if Gmail app is not installed
+            Toast.makeText(this, "Gmail app is not installed", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -6,6 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".MainActivity">
 
     <!-- Main content -->
@@ -29,7 +30,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
+                    android:background="#303F9F"
+                    app:titleTextColor="#FFFFFF"
                     app:navigationIcon="@drawable/hamburger_icon"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:title="@string/app_name" />
@@ -47,7 +49,8 @@
                         android:hint="Search for wallpapers"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:textColor="#212121" />
 
                     <ImageButton
                         android:id="@+id/searchButton"
@@ -63,7 +66,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
 
             </LinearLayout>
 
@@ -77,7 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="#F5F5F5"
         app:headerLayout="@layout/nav_header_main"
+        app:itemTextColor="#212121"
         app:menu="@menu/activity_main_drawer">
     </com.google.android.material.navigation.NavigationView>
 
