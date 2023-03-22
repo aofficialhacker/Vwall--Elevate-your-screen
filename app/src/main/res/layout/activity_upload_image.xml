@@ -40,7 +40,7 @@
                 android:layout_marginTop="16dp"
                 android:contentDescription="Uploaded image preview"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background" />
+                 />
 
             <EditText
                 android:id="@+id/image_name_edit_text"
