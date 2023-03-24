@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+//this is for uploadImageActivity
+
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
     private Context mContext;
@@ -26,6 +28,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         mImageList = imageList;
     }
 
+    //creating new viewholder object of an item to display that item
+
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -33,12 +37,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return new ImageViewHolder(view);
     }
 
+    //bind data to view holder
+
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
         Imagenew currentImage = mImageList.get(position);
 
         holder.mTextView.setText(currentImage.getImageName());
         Picasso.get().load(currentImage.getImageUrl()).into(holder.mImageView);
+
+        //when user clicks on image item
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +63,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     public int getItemCount() {
         return mImageList.size();
     }
+
+    //hold references to views,here textview or imageview are held as reference(improves performance of recycler view)
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
 

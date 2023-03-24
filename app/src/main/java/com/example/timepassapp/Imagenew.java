@@ -27,17 +27,11 @@ public class Imagenew {
         return imageName;
     }
 
-    public void setImageName(String imageName) {
-        this.imageName = imageName;
-    }
 
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }
 
 

@@ -35,7 +35,6 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
     private RecyclerViewAdapter recyclerViewAdapter;
     private List<WallpaperItem> wallpaperItemList;
     private RequestQueue mRequestQueue;
-    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +67,7 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
 
 
     }
+    //when user select category from spinner
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -115,6 +115,7 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
     }
 
 
+    //when user click on wallpaper
 
     @Override
     public void onItemClick(int position) {
@@ -157,12 +158,12 @@ public class CategoryActivity extends AppCompatActivity implements AdapterView.O
 
         DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
 
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setTitle("Downloading Image");
-        request.setDescription("Downloading image from Pixabay...");
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));             // url of image download is set
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED); //notify when download is complete
+        request.setTitle("Downloading Image");      //title of downloading notification
+        request.setDescription("Downloading image from Pixabay...");    //description of downloading notification
 
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "PixabayImage.jpg");
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "PixabayImage.jpg"); //where to store downloaded image
 
         downloadManager.enqueue(request);
 

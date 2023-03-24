@@ -106,14 +106,17 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistImage
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.setType("image/*");
+        //start activity and receive result from that activity
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
+    //used after startActivityForResult() returns result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            //extract uri of image
             Uri imageUri = data.getData();
             imageList.add(imageUri);
             adapter.notifyItemInserted(imageList.size() - 1);
@@ -137,8 +140,6 @@ public class PlaylistActivity extends AppCompatActivity implements PlaylistImage
         }
         savePlaylistButton.setVisibility(View.VISIBLE);
     }
-
-
 }
 
 

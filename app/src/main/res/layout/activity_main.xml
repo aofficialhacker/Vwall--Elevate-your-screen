@@ -29,7 +29,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="@drawable/splash_background"
+                    android:background="@color/splash1"
                     app:titleTextColor="@android:color/white"
                     app:navigationIcon="@drawable/hamberger_v4"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"

@@ -32,7 +32,7 @@ public class DownloadedImagesFragment extends Fragment implements DownloadedImag
                              Bundle savedInstanceState) {
 
         LinearLayout searchLayout = getActivity().findViewById(R.id.ll);
-        searchLayout.setVisibility(View.GONE);
+        searchLayout.setVisibility(View.GONE);  //to hide search layout of main activity in downloadedImagesFragment
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_downloaded_images, container, false);
@@ -61,20 +61,23 @@ public class DownloadedImagesFragment extends Fragment implements DownloadedImag
     }
 
     private void loadDownloadedImages() {
-        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS); //get reference to download directory of device
         File[] files = downloadsDir.listFiles();
 
 
         if (files != null) {
             for (File file : files) {
                 if (file.isFile() && file.getName().endsWith(".jpg")) {
-                    downloadedImagesList.add(file.getAbsolutePath());
+                    downloadedImagesList.add(file.getAbsolutePath()); //stores absolute path of file to downloadedImagesList
                 }
             }
         }
 
         adapter.notifyDataSetChanged();
     }
+
+
+
 
 }
 

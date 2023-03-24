@@ -13,8 +13,5 @@ public class WallpaperItem {
         return mImageUrl;
     }
 
-    public String getCreatorName() {
-        return mCreatorName;
-    }
 }
 

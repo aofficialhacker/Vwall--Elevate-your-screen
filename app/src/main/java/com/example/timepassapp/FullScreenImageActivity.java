@@ -19,6 +19,6 @@ public class FullScreenImageActivity extends AppCompatActivity {
 
         // Load the image using an image loading library like Glide or Picasso
         ImageView imageView = findViewById(R.id.full_screen_image_view);
-        Glide.with(this).load(imageUrl).dontTransform().into(imageView);
+        Glide.with(this).load(imageUrl).dontTransform().into(imageView); //'this' is a context here that gives access to application resources
     }
 }

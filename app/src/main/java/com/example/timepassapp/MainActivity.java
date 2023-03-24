@@ -174,10 +174,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         // Set up the navigation drawer
         drawer = findViewById(R.id.drawer_layout);
 
+        //setting hamburger to slide drawer
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //opens drawer with animation from left of screen,here START represents left top of screen
                 drawer.openDrawer(GravityCompat.START);
             }
         });
@@ -260,10 +263,11 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
         wallpaperItemList = new ArrayList<>();
+        //custom adapter that provides data and view bindings,wallpaperItemList is a data source
         recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, wallpaperItemList);
 
         recyclerView.setAdapter(recyclerViewAdapter);
-        recyclerViewAdapter.setOnItemClickListener(MainActivity.this);
+        recyclerViewAdapter.setOnItemClickListener(MainActivity.this); //onItemClick of main activity is called when item is clicked
         imageUrl = getIntent().getStringExtra("imageUrl");
 
         // Get a reference to the EditText
@@ -273,6 +277,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+
+                //check if editor action is search action
+
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     // Get the search query from the EditText
                     String query = editText.getText().toString().trim();
@@ -309,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         String pixabayUrl = "https://pixabay.com/api/?key=" + "28627810-443d6398e30814e22bbfdcd59" + "&q=" + query + "&image_type=photo";
 
         // Search Pixabay API
+        //using volley library to make a get request
         JsonObjectRequest pixabayRequest = new JsonObjectRequest(Request.Method.GET, pixabayUrl, null,
                 response -> {
                     try {
@@ -439,6 +447,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     //change wallpaper automatically
 
     public void changeWallpaperAutomatically(int intervalInSeconds) {
+        //get list of downloaded wallpaper files
         List<File> wallpaperFiles = getDownloadedWallpaperFiles();
         if (!wallpaperFiles.isEmpty()) {
             Timer timer = new Timer();
@@ -449,6 +458,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                     WallpaperManager wallpaperManager = WallpaperManager.getInstance(MainActivity.this);
                     try {
                         Uri uri = Uri.fromFile(wallpaperFiles.get(index));
+                        //extract bitmap from Uri
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
                         wallpaperManager.setBitmap(bitmap);
                         index = (index + 1) % wallpaperFiles.size();
@@ -469,9 +479,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             Toast.makeText(MainActivity.this, "Automatic wallpaper change stopped", Toast.LENGTH_SHORT).show();
         }
     }
-
-
-
 
 
     // Method to get downloaded wallpaper files

@@ -36,12 +36,14 @@ public class DownloadedImagesAdapter extends RecyclerView.Adapter<DownloadedImag
 
     @NonNull
     @Override
+    //inflate layout of item
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_downloaded_image, parent, false);
         return new ViewHolder(view, listener);
     }
 
     @Override
+    //bind data of an item to item view
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String imagePath = downloadedImagesList.get(position);
         Glide.with(context)
