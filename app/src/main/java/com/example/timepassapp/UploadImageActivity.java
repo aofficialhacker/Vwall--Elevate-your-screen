@@ -152,6 +152,7 @@ public class UploadImageActivity extends AppCompatActivity {
                                     }
 
                                     Imagenew image = new Imagenew(imageName, uri.toString());
+
                                     mFirestore.collection("uploads").add(image)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
